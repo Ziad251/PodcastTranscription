@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.sdk">
+<Project Sdk="Microsoft.NET.sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
