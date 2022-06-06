@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transcription-project.WebApp
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: transcription-project.WebApp
+  template: 
+    metadata:
+      labels:
+        app: transcription-project.WebApp
+        version: IMAGE_LABEL
+    spec:
+      containers:
+      - name: transcription-project.WebApp
+        image: ACL_URL/transcription-project.WebApp:IMAGE_URL
+        ports:
+        - containerPort: 80
+        resources: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: transcription-project.WebApp
+spec:
+  type: NodePort
+  selector:
+    app: transcription-project.WebApp
+  ports:
+  - port: 80
+    targetPort: 80
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: transcription-project.WebApp
+  annotations:
+      kubernates.io/ingress.class: addon-http-application-routing
+spec:
+  rules:
+  - host: transcription-project.WebApp.AKS_URL
+    http:
+      paths:
+      - backend:
+          serviceName: transcription-project.WebApp
+          servicePort: 80
+        path: /

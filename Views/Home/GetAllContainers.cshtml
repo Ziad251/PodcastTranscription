@@ -1,0 +1,37 @@
+@{
+var n = TempData["null"] as string;
+var containers = ViewData["Model"];
+}
+<h1> Containers </h1>
+@if (!string.IsNullOrEmpty(n))
+{
+    <h2 class="alert-danger" style="padding: 20px;">@n</h2>
+}
+
+@if(!string.IsNullOrEmpty(@ViewBag.Json))
+{
+    <h2 class="alert-danger" style="padding: 20px;">Empty</h2>
+}
+
+<link rel="stylesheet" href="/css/GetAllContainers.css">
+<div class="wrapper">
+</div>
+<script>
+    window.onload = function () {
+        const wrapper = document.querySelector(".wrapper");
+        let data = '@containers';
+        let containers = JSON.parse(data.replace(/&quot;/g, '"'));
+        containers.forEach(c => {
+            let card = document.createElement("div");
+            card.classList.add("card");
+            let containerName = c;
+            console.log(c);
+            let a = document.createElement("a");
+            a.innerHTML = `${containerName}`;
+            a.href = `/Home/RequestCustomTranscription/${containerName}`;
+            card.appendChild(a);
+            wrapper.appendChild(card);
+        });
+    }
+</script>
+

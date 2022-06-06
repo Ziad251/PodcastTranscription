@@ -1,0 +1,221 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background-image: url(https://source.unsplash.com/qDMB6kUO7qQ);
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.mycontainer {
+ flex: 100%;
+  content:"";
+  height: 500px;
+  width: 1024px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5em;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+  flex-direction: row;
+}
+
+.sidebar {
+  flex: 50%;
+  display: flex;
+  position: absolute;
+  left: 30px;
+  height: 500px;
+  width: 300px;
+  font-size: 120px;
+  text-align: center;
+  color: white;
+  align-items: center;
+  justify-content: start;
+}
+.pre {
+  content: "<";
+  position: absolute;
+  left: 10px;
+  height: 200px;
+  width: 20px;
+  font-size: 40px;
+  font-weight: 900;
+  display: flex;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.hero {
+  display: flex;
+  position: absolute;
+  left:150px;
+  right: 50px;
+  height: 500px;
+  width: 1000px;
+  align-items: center;
+  gap: 5em;
+  overflow-x: scroll;
+}
+
+.result {
+  flex-shrink: 0;
+  margin: 10px;
+  width: 190px;
+  height: 400px;
+  background-color: white;
+  transition: 1s;
+  box-shadow: 5px 5px 10px black;
+}
+
+.result img {
+  width: 100%;
+  height: 100%;
+}
+
+.result:hover {
+  transform: rotateY(180deg);
+}
+
+.next {
+  content: ">";
+   height: 200px;
+  width: 20px;
+  position: absolute;
+  right: 0px;
+  font-size: 40px;
+  font-weight: 900;
+  display: flex;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+#videoTitle {
+  position: absolute;
+  font-family: 'Press Start 2P', cursive;
+  padding: 10px 30px;
+ background: rgba(0, 0, 0, 0.6); 
+  box-shadow: 4px 4px 5px black;
+  border-radius: 10px;
+  font-size: 14px;
+  text-decoration: none;
+  color: white;
+  text-align: center;
+}
+
+.done {
+  width: 180px;
+  height: 100px;
+  box-shadow: 2px 2px 5px rgb(2,2,2);
+  text-decoration: none;
+  color: black;
+}
+
+.hero::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.hero {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+ @media (max-width: 800px) {
+    *{
+    }
+
+    .sidebar{
+      width: 1vw;
+      height: 1px;
+      margin: 0;
+      padding: 0;
+      font-size: 40px;
+      justify-content: center;
+    }
+
+    .pre {
+      left: 10px;
+    }
+
+    .hero {
+      width: 2vw;
+    }
+
+  }
+   @media (max-width: 1800px) {
+    *{
+    }
+
+    .sidebar{
+      width: 15vw;
+      height: 1px;
+      margin: 0px;
+      padding: 0px;
+      font-size: 40px;
+      justify-content: center;
+    }
+
+    .pre {
+      left: 10px;
+    }
+
+    .hero {
+      width: 70vw;
+    }
+
+  }
+  
+
+@media (max-width: 600px) {
+  *{
+  }
+  .mycontainer {
+    flex-direction:column;
+    flex-wrap: nowrap;
+    flex: 100%;
+    width: 70vw;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid white;
+    }
+  
+  .next,
+  .pre 
+  {
+   height: 0px;
+    width: 0px;
+  }
+  .sidebar,
+  .hero {
+    left: 0;
+    right: 0;
+    position: relative;
+  }
+  
+  .sidebar{
+    width: 70vw;
+    height: 1px;
+    margin: 0;
+    padding: 0;
+    font-size: 40px;
+    justify-content: center;
+  }
+  .hero{
+    flex:100%;
+    width: 70vw;
+    height: 100vh;
+    flex-direction: column;
+      }
+  
+  .result {
+    width: 300px;
+    height: 200px;
+  }
+  
+}

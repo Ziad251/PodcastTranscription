@@ -1,0 +1,45 @@
+
+body {
+  background-image: url(https://source.unsplash.com/qDMB6kUO7qQ);
+ -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  
+}
+
+.mycontainer {
+  content:"";
+  color: red;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mycontainer h1 {
+  font-size: 60px;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.mycontainer p {
+  font-size: 20px;
+  color: white;
+  font-family: oswald;
+  font-weight: 100px;
+}
+.more {
+  position: absolute;
+  font-family: 'Press Start 2P', cursive;
+  bottom: -100px;
+  width: 140px;
+  padding: 10px 30px;
+ background: rgba(0, 0, 0, 0.6); 
+  box-shadow: 4px 4px 5px black;
+  border-radius: 10px;
+  font-size: 14px;
+  text-decoration: none;
+  color: white;
+  text-align: center;
+}
+

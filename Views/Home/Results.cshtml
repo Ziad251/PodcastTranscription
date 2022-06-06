@@ -1,0 +1,104 @@
+<html>
+
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&family=Press+Start+2P&family=Raleway:wght@200&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/css/results.css">
+</head>
+
+<body>
+    <div class="mycontainer">
+
+
+
+        <div class="pre">
+        </div>
+        <div class="hero">
+
+        </div>
+
+        <div class="next">
+        </div>
+
+        <div class="footer">
+            <h1><span id="videoTitle"></span></h1>
+        </div>
+
+    </div>
+    <script>
+        window.onload = function () {
+
+            const next = document.querySelector(".next");
+            const pre = document.querySelector(".pre");
+            const hero = document.querySelector(".hero");
+            const videoTitle = document.getElementById("videoTitle");
+
+            var intervalForward, intervalBackward;
+            next.onmouseover = function () {
+                scrollForward = function () {
+                    document.querySelector(".hero").scrollLeft += 20;
+                    next.style = "background: #000; cursor:pointer;";
+
+                }
+                intervalForward = setInterval(scrollForward, 80);
+            }
+            next.onmouseleave = function () {
+                clearInterval(intervalForward);
+            }
+            pre.onmouseover = function () {
+                scrollBackward = function () {
+                    document.querySelector(".hero").scrollLeft -= 20;
+                    pre.style = "background: #000; cursor:pointer;";
+                }
+                intervalBackward = setInterval(scrollBackward, 80);
+            }
+
+            pre.onmouseleave = function () {
+                clearInterval(intervalBackward);
+            }
+
+            var uri = `/api/GetAllVideoNames`;
+            fetch(uri)
+                .then(res => {
+                    return res.json();
+                })
+                .then(res => {
+                    res.forEach(d => {
+                        let div = document.createElement("div");
+                        div.className = "result";
+                        let img = document.createElement("img");
+                        img.src = d.Thumbnail;
+                        div.appendChild(img);
+                        hero.appendChild(div);
+
+                        div.onclick = function () {
+                            let name = d.UName;
+                            let id = d.VideoId;
+                            hero.innerHTML = "Loading";
+                            fetch(`/api/GetFile?id=${id}&fileName=${name}`)
+                                .then(res => {
+                                    return res.json();
+                                })
+                                .then(res => {
+                                    hero.innerHTML = "Done";
+                                    var body = res.url;
+                                    if(body) {
+                                    window.location = body;
+                                    }
+                                });
+                        }
+                        div.onmouseover = function() {
+                            videoTitle.innerHTML = d.Title;
+                        }
+                    })
+                });
+
+        }
+
+    </script>
+</body>
+
+</html>

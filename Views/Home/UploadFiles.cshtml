@@ -1,0 +1,204 @@
+@{
+  Layout = "";
+}
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secured</title>
+  <link rel="stylesheet" href="/css/UploadFile.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+</head>
+<header> </header>
+
+<body>
+  <div class="outerwrapper">
+
+    <div class="wrapper">
+      <h1 class="desc"> loading </h1>
+      <input type="text" name="checkmeout" class="listname-input" placeholder="Enter list name here" value="" required>
+      <form method="POST" enctype=multipart/form-data>
+        <input class="file-input" type="file" name="" accept="audio/wav" multiple hidden>
+        <i class="fas fa-cloud-upload-alt"></i>
+        <p>Browse File to Upload</p>
+      </form>
+
+      <section class="server-response"></section>
+      <section class="next-area">
+        <div class="next-button">next</div>
+      </section>
+      <section class="progress-area"></section>
+      <section class="uploaded-area"></section>
+
+    </div>
+
+    <script>
+      window.onload = function () {
+      const form = document.querySelector("form"),
+        fileInput = document.querySelector(".file-input"),
+        progressArea = document.querySelector(".progress-area"),
+        uploadedArea = document.querySelector(".uploaded-area"),
+        headerArea = document.querySelector(".desc"),
+        serverResponse = document.querySelector(".server-response"),
+        listNameInput = document.querySelector(".listname-input"),
+        nextBtn = document.querySelector(".next-button");
+
+      let openRequests = 0;
+      let responseReceieved = 0;
+      let error = 0;
+      let uri = "/api/RegisterParticipants";
+      headerArea.innerHTML = "Please Upload the audio files that will be used to create audio signatures. <br><br> Make sure to name the files with the person's firstname or lastname or a preffered name.<br><br> Click Next when done.";
+      serverResponse.innerHTML = `Successfully  Processed: ${responseReceieved} File/Files. <br> Remaining: ${openRequests}.`;
+
+
+
+
+      nextBtn.addEventListener("click", handleNextFile = () => {
+        if (openRequests > 0) {
+          alert("Please wait. Processing File/Files.");
+        }
+        else {
+          nextBtn.blur = true;
+          nextBtn.disabled = true;
+          fileInput.disabled = false;
+          fileInput.multiple = false;
+          headerArea.innerHTML = "Please Upload Conversation file now. Only one file is allowed.";
+          listNameInput.disabled = true;
+          uploadedArea.innerHTML = "";
+          uri = "/api/UploadConversationFile";
+          openRequests = 0;
+          responseReceieved = 0;
+          error = 0;
+          serverResponse.innerHTML = `Successfully Processed: ${responseReceieved} File/Files. <br> ${error} failed. <br> Remaining: ${openRequests}.`;
+        }
+      });
+
+
+      function sendFile(file, listname) {
+        const xhr = new XMLHttpRequest();
+        const fd = new FormData();
+        let name = file.name;
+
+        xhr.open("POST", uri, true);
+
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            openRequests--;
+            responseReceieved++;
+            serverResponse.innerHTML = `Successfully Processed: ${responseReceieved} File/Files. <br> ${error} failed. <br> Remaining: ${openRequests}.`;
+            var body = xhr.response;
+            if(body)
+            {
+            window.location = body;
+            }
+          }
+          if (xhr.status == 400) {
+            openRequests--;
+            error++;
+            serverResponse.innerHTML = `Successfully Processed: ${responseReceieved} File/Files. <br> ${error} failed. <br> Remaining: ${openRequests}.`;
+          }
+
+        };
+
+
+        xhr.upload.addEventListener("progress", ({ loaded, total }) => {
+          let fileLoaded = Math.floor((loaded / total) * 100);
+          let fileTotal = Math.floor(total / 1000);
+          let fileSize;
+          (fileTotal < 1024) ? fileSize = fileTotal + " KB" : fileSize = (loaded / (1024 * 1024)).toFixed(2) + " MB";
+          let progressHTML = `<li class="row">
+                              <i class="fas fa-file-alt"></i>
+                              <div class="content">
+                              <div class="details">
+                              <span class="name">${name} • Uploading</span>
+                              <span class="percent">${fileLoaded}%</span>
+                              </div>
+                              <div class="progress-bar">
+                              <div class="progress" style="width: ${fileLoaded}%"></div>
+                              </div>
+                              </div>
+                              </li>`;
+          uploadedArea.classList.add("onprogress");
+          progressArea.innerHTML = progressHTML;
+          if (loaded == total) {
+            progressArea.innerHTML = "";
+            let uploadedHTML = `<li class="row">
+                                <div class="content upload">
+                                <i class="fas fa-file-alt"></i>
+                                <div class="details">
+                                <span class="name">${name} • Uploaded</span>
+                                <span class="size">${fileSize}</span>
+                                </div>
+                                </div>
+                                <i class="fas fa-check"></i>
+                                </li>`;
+            uploadedArea.classList.remove("onprogress");
+            uploadedArea.insertAdjacentHTML("afterbegin", uploadedHTML);
+          }
+          if (loaded == total && file.prototype == "conversation") {
+
+            fileInput.disabled = true;
+            form.disabled = true;
+            nextBtn.disabled = true;
+            form.style.cursor = "none";
+            nextBtn.innerHTML = "Done.";
+            form.removeEventListener("click", handleForm);
+            nextBtn.removeEventListener("click", handleNextFile);
+          }
+        });
+
+
+        fd.append(listname, file);
+        // Initiate a multipart/form-data upload
+        xhr.send(fd);
+
+        // End of sendFile
+      }
+
+
+
+      
+        form.addEventListener("click", () => {
+        if (!listNameInput.value == "" && listNameInput.value.length > 8) {
+          fileInput.click();
+        }
+        else {
+          alert("Enter a List Name (at least 8 characters) before starting upload.");
+        }
+      });
+
+        listNameInput.value = "";
+
+        // Handled the Files submitted through the form
+        fileInput.onchange = function (event) {
+          fileInput.disabled = true;
+          const filesArray = event.target.files;
+          let listname = listNameInput.value;
+          for (let i = 0; i < filesArray.length; i++) {
+            sendFile(filesArray[i], listname);
+            openRequests++;
+            serverResponse.innerHTML = `Successfully Processed: ${responseReceieved} File/Files. <br> ${error} failed. <br> Remaining: ${openRequests}.`;
+
+            //tag each file as participant and the last file as conversation
+            if (fileInput.multiple == true) {
+              filesArray[i].prototype = "participants";
+            }
+            else {
+              filesArray[i].prototype = "conversation";
+            }
+
+
+          }
+
+        }
+      }
+
+
+
+    </script>
+
+  </div>
+</body>
+
+</html>

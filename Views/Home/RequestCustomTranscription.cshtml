@@ -1,0 +1,25 @@
+@{
+    var list = ViewData["listname"];
+}
+<h1>Realtime Transcription </h1>
+<div class="wrapper">
+</div>
+<script>
+    let url = "/api/StartTranscriptionWithCustomAudio/@list";
+    let wrapper = document.querySelector(".wrapper");
+
+    wrapper.innerHTML += "transcription requested... <br>";
+    const eventSource = new EventSource(url, { withCredentials: true });
+
+    eventSource.addEventListener("event name", (event) => {
+        var json = JSON.parse(event.data);
+        @* console.log(json.result); *@
+        wrapper.innerHTML += json.result + "<br>";
+    });
+
+    eventSource.addEventListener("close", (event) => {
+        eventSource.close()
+        wrapper.innerHTML += "End of File." + "<br>";
+    });
+
+</script>

@@ -1,0 +1,20 @@
+
+@*
+
+*@
+@{
+
+var error = TempData["Error"] as string;
+}
+
+<h1>Signup</h1>
+@if (!string.IsNullOrEmpty(error))
+{
+    <h2 class="alert-danger" style="padding: 20px;">@error</h2>
+}
+
+<form action="/register/" method="post">
+<input type="text" name="Username" placeholder="username">
+<input type="password" name="Password" placeholder="password">
+<input type="submit" value="signup">
+</form>

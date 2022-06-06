@@ -1,0 +1,21 @@
+*.tmp
+
+*.dll
+
+/obj
+/obj/
+/media
+/.vscode
+/.config
+/.config/
+/Logs
+/node_modules
+/node_modules/
+/appsettings.json
+/bin/Debug
+bin/Debug/net6.0/appsettings.json
+ "dxs8Q~_uD_~hxUHH0CjEIhUd4Hr3nGjNc7RukcLg"
+/bin/Debug/net6.0/runtimes
+/Migrations
+/ffmpeg.exe
+/bin/Release
