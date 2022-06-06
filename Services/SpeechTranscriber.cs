@@ -7,10 +7,7 @@ using Microsoft.CognitiveServices.Speech;
 using Microsoft.CognitiveServices.Speech.Transcription;
 using Serilog;
 using transcription_project.WebApp.Models;
-<<<<<<< HEAD
 using transcription_project.WebApp.Extensions;
-=======
->>>>>>> cfca44a87104f08a8c3d7d53b067cc3192fea55e
 
 namespace transcription_project.WebApp.Services
 {

@@ -18,11 +18,7 @@ namespace transcription_project.WebApp.Services
         Task<Object> FindAllYouTubeTitles(UserData user);
         Task AddParticipant(string containerName, UserData user, string name, VoiceSignature voiceSignature);
         Task<int> SaveAsync();
-<<<<<<< HEAD
         Task<UserData> AddUser(string email);
-=======
-        Task<UserData> AddUser(string username, string password);
->>>>>>> cfca44a87104f08a8c3d7d53b067cc3192fea55e
     }
 
 }

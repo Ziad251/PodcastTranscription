@@ -16,13 +16,10 @@ using Serilog;
 using Microsoft.AspNetCore.Authorization;
 using System.Threading;
 using transcription_project.WebApp.Utils;
-<<<<<<< HEAD
 using VideoLibrary;
 using Xabe.FFmpeg;
 using Xabe.FFmpeg.Downloader;
 using System.Linq;
-=======
->>>>>>> cfca44a87104f08a8c3d7d53b067cc3192fea55e
 
 namespace transcription_project.WebApp.Controllers
 {
@@ -38,17 +35,10 @@ namespace transcription_project.WebApp.Controllers
         private string _dir;
         private VideoDownloader _videoDownloader;
 
-<<<<<<< HEAD
         public ApiController(IBlobService blobService,
         IConfiguration Configuration,
         IVoiceSignatureService vcservice,
         ISpeechTranscriber transcriber,
-=======
-        public ApiController(IBlobService blobService, 
-        IConfiguration Configuration, 
-        IVoiceSignatureService vcservice, 
-        ISpeechTranscriber transcriber, 
->>>>>>> cfca44a87104f08a8c3d7d53b067cc3192fea55e
         IGetClaimsProvider claims,
         IRepositoryService repository,
         IWebHostEnvironment env,

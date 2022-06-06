@@ -63,20 +63,11 @@ namespace transcription_project.WebApp.Services
             return await containersList.Select(c => c.containerName).ToArrayAsync();
         }
 
-<<<<<<< HEAD
         public async Task<UserData> AddUser(string email)
         {
             var newuser = new UserData()
             {
                 Email = email,
-=======
-        public async Task<UserData> AddUser(string username, string password)
-        {
-            var newuser = new UserData()
-            {
-                Username = username,
-                Password = password
->>>>>>> cfca44a87104f08a8c3d7d53b067cc3192fea55e
             };
             _context.UserDatas.Add(newuser);
             return newuser;
@@ -93,7 +84,6 @@ namespace transcription_project.WebApp.Services
                 context.Containers.Add(newContainer);
                 do
                 {
-<<<<<<< HEAD
                     saveFailed = false;
                     try
                     {
@@ -119,25 +109,12 @@ namespace transcription_project.WebApp.Services
             return await youtubeTitlesList.Select(y => new{Yid=y.id, Title=y.Title, UName=y.UName, Thumbnail=y.Thumbnail, VideoId=y.VideoId}).OrderBy(y => y.Yid).ToListAsync();
         }
 
-=======
-                    await _context.SaveChangesAsync();
-                }
-                catch (Exception e)
-                {
-                    saveFailed = true;
-                    HandleException.Handler(e);
-                }
-            } while (saveFailed);
-        }
-
->>>>>>> cfca44a87104f08a8c3d7d53b067cc3192fea55e
         public async Task AddParticipant(string containerName, UserData user, string pname, VoiceSignature voiceSignature)
         {
             var newDbContext = new DbExtension(_configuration);
             var optionsBuilder = newDbContext.BuildOptions();
             using (UserDbContext context = new UserDbContext(optionsBuilder.Options))
             {
-<<<<<<< HEAD
 
                 // Find the exact container specified and add to it the participants.
                 IQueryable<Container> containersList = _context.Containers.Where(c => c.containerName == containerName && c.user == user);
@@ -168,14 +145,6 @@ namespace transcription_project.WebApp.Services
                 
                 await context.SaveChangesAsync();
             }
-=======
-                personName = pname,
-                voiceData = signatureJson,
-                container = container,
-            };
-            context.Participants.Add(p);
-            await context.SaveChangesAsync();
->>>>>>> cfca44a87104f08a8c3d7d53b067cc3192fea55e
         }
 
         public async Task<int> SaveAsync()
