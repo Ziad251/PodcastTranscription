@@ -189,7 +189,7 @@ namespace transcription_project.WebApp.Controllers
             //Set directory where app should look for FFmpeg
             FFmpeg.SetExecutablesPath("C:/Users/HP/Desktop/both/workspace/transcription-project.WebApp/bin/Debug/net6.0/");
             //Get latest version of FFmpeg. It's great idea if you don't know if you had installed FFmpeg.
-            // await Xabe.FFmpeg.Downloader.FFmpegDownloader.GetLatestVersion(FFmpegVersion.Official);
+            await Xabe.FFmpeg.Downloader.FFmpegDownloader.GetLatestVersion(FFmpegVersion.Official);
             var Conversions = new Conversion();
             var conversionResult = await Conversions.Start(arguments);
 
