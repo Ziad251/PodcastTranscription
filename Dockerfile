@@ -9,7 +9,7 @@ RUN dotnet restore
 # Copy everything else and build
 COPY bin/Release/net6.0/publish/ .
 RUN dotnet build -c Release
-RUN dotnet publish -c Release /dist
+RUN dotnet publish -c Release -o /dist
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
